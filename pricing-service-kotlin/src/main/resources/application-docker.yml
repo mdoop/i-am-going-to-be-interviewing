@@ -8,7 +8,11 @@ spring:
     console:
       enabled: false
 
+management:
+  health:
+    redis:
+      enabled: true
+
 app:
   cache:
     redis-enabled: true
-

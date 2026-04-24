@@ -28,6 +28,9 @@ management:
     web:
       exposure:
         include: health,prometheus,metrics,info
+  health:
+    redis:
+      enabled: false
   endpoint:
     health:
       show-details: always
@@ -39,4 +42,3 @@ app:
   cache:
     redis-enabled: false
     ttl-seconds: 180
-
