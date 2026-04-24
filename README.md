@@ -127,10 +127,36 @@ mvn test
   - `pricing.cache.miss`
   - `pricing.cache.fallback`
 
+## Deploy On Render
+
+This repo now includes a root-level `render.yaml` plus Dockerfiles for both services so you can deploy directly from GitHub on Render.
+
+### Fastest path
+
+1. Sign in to Render and connect your GitHub account.
+2. Open `Blueprints` and create a new Blueprint from this repository.
+3. Render will detect `render.yaml` and propose two web services:
+   - `interview-pricing-java`
+   - `interview-pricing-kotlin`
+4. Keep the default branch as `main` and apply the Blueprint.
+5. Wait for both Docker builds to finish.
+
+Each service uses the app's default in-memory H2 database and local fallback cache, so you do not need Postgres or Valkey for a first demo deployment.
+
+### After deploy
+
+- Java health: `https://<your-java-service>.onrender.com/actuator/health`
+- Java metrics: `https://<your-java-service>.onrender.com/actuator/prometheus`
+- Kotlin health: `https://<your-kotlin-service>.onrender.com/actuator/health`
+- Kotlin metrics: `https://<your-kotlin-service>.onrender.com/actuator/prometheus`
+
+### Important free-tier note
+
+Render free web services spin down after idle time, so the first request after a pause can take around a minute to wake up.
+
 ## Interview Talking Points
 
 - Compare Java records and service classes with Kotlin data classes and expression-heavy service code.
 - Explain why both services keep the same HTTP contract while using different language idioms internally.
 - Walk through the Redis fallback path and how it protects quote reads during dependency issues.
 - Use the Grafana/Prometheus setup to talk about latency, cache hit rate, and production debugging.
-

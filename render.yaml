@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: interview-pricing-java
+    runtime: docker
+    plan: free
+    region: virginia
+    branch: main
+    dockerfilePath: ./pricing-service-java/Dockerfile
+    dockerContext: .
+    healthCheckPath: /actuator/health
+    autoDeployTrigger: commit
+
+  - type: web
+    name: interview-pricing-kotlin
+    runtime: docker
+    plan: free
+    region: virginia
+    branch: main
+    dockerfilePath: ./pricing-service-kotlin/Dockerfile
+    dockerContext: .
+    healthCheckPath: /actuator/health
+    autoDeployTrigger: commit
