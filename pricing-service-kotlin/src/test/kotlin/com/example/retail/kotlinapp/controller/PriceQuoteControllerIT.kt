@@ -6,6 +6,8 @@ import com.example.retail.contract.PromotionImportRequest
 import com.example.retail.contract.PromotionRule
 import com.example.retail.contract.PromotionType
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.hamcrest.Matchers.containsString
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -27,6 +29,23 @@ class PriceQuoteControllerIT {
 
     @Autowired
     lateinit var objectMapper: ObjectMapper
+
+    @Test
+    fun `serves api playground at root`() {
+        val rootResult = mockMvc.get("/")
+            .andExpect {
+                status { isOk() }
+            }
+            .andReturn()
+
+        assertEquals("index.html", rootResult.response.forwardedUrl)
+
+        mockMvc.get("/index.html")
+            .andExpect {
+                status { isOk() }
+                content { string(containsString("Retail Pricing API Playground")) }
+            }
+    }
 
     @Test
     fun `returns expected quote for happy path`() {
