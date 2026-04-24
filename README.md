@@ -127,6 +127,27 @@ mvn test
   - `pricing.cache.miss`
   - `pricing.cache.fallback`
 
+### Local Grafana For Render Services
+
+After deploying both services to Render, you can run local Prometheus and Grafana against the public Render metrics endpoints:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.render-monitoring.yml up -d prometheus grafana
+```
+
+Then open Grafana at `http://localhost:3000` with `admin` / `admin`.
+
+To generate metrics for the dashboard:
+
+```bash
+./scripts/generate-traffic.sh
+```
+
+Prometheus will scrape:
+
+- `https://interview-pricing-java.onrender.com/actuator/prometheus`
+- `https://interview-pricing-kotlin.onrender.com/actuator/prometheus`
+
 ## Deploy On Render
 
 This repo now includes a root-level `render.yaml` plus Dockerfiles for both services so you can deploy directly from GitHub on Render.

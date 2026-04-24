@@ -1,0 +1,4 @@
+services:
+  prometheus:
+    volumes:
+      - ./monitoring/prometheus-render.yml:/etc/prometheus/prometheus.yml:ro
