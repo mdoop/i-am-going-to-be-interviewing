@@ -41,8 +41,8 @@
       "id": 1,
       "targets": [
         {
-          "expr": "rate(pricing_quote_latency_seconds_sum[5m]) / rate(pricing_quote_latency_seconds_count[5m]) * 1000",
-          "legendFormat": "{{source}} average latency",
+          "expr": "sum by (application, source) (pricing_quote_latency_seconds_sum) / sum by (application, source) (pricing_quote_latency_seconds_count) * 1000",
+          "legendFormat": "{{application}} {{source}} average latency",
           "refId": "A"
         }
       ],
@@ -67,7 +67,7 @@
       "id": 2,
       "targets": [
         {
-          "expr": "sum by (tier, application) (increase(pricing_cache_hit_total[15m]))",
+          "expr": "sum by (tier, application) (pricing_cache_hit_total)",
           "legendFormat": "{{application}} {{tier}}",
           "refId": "A"
         }
@@ -93,7 +93,7 @@
       "id": 3,
       "targets": [
         {
-          "expr": "sum by (application) (increase(pricing_cache_miss_total[15m]))",
+          "expr": "sum by (application) (pricing_cache_miss_total)",
           "legendFormat": "{{application}} misses",
           "refId": "A"
         }
@@ -119,7 +119,7 @@
       "id": 4,
       "targets": [
         {
-          "expr": "sum by (application, operation) (increase(pricing_cache_fallback_total[15m]))",
+          "expr": "sum by (application, operation) (pricing_cache_fallback_total)",
           "legendFormat": "{{application}} {{operation}}",
           "refId": "A"
         }
@@ -144,6 +144,5 @@
   },
   "timezone": "browser",
   "title": "Retail Pricing Comparison",
-  "version": 1
+  "version": 2
 }
-
